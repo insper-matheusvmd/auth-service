@@ -1,22 +1,25 @@
 server:
   port: 8080
-
+  
 spring:
   application:
     name: auth
 
-  mvc:
-    problemdetails:
-      enabled: true
-
 store:
   jwt:
-    secretKey: ${STORE_JWT_SECRET_KEY:changeit}
-  token:
-    duration: ${STORE_TOKEN_DURATION:3600000} # 1 hour in milliseconds
-    https: ${STORE_TOKEN_HTTPS:true}
+    secretKey: ${JWT_SECRET_KEY}
+    duration: 86400000 # 24 hours in milliseconds
+    httpOnly: ${JWT_HTTP_ONLY}
 
 logging:
   level:
     root: info
     store: debug
+    org.springframework.web: debug
+  
+management:
+  endpoints:
+    web:
+      base-path: /auth/actuator
+      exposure:
+        include: ['prometheus']
